@@ -5,7 +5,8 @@ RSpec.describe User, type: :model do
     
     before do
       @user = FactoryBot.build(:user)
-
+    end
+    
     # カラムの値が空であるときの制限
     it 'ニックネームが空では登録できない事' do
       @user.nickname = ""
@@ -58,8 +59,17 @@ RSpec.describe User, type: :model do
 
     # メールアドレスについて、空でないこと以外の制限
     it '既にDBに存在するメールアドレスでは登録できないこと' do
+      @user.save
+      another_user = FactoryBot.build(:user)
+      another_user.email = @user.email
+      another_user.valid?
+      expect(another_user.errors.full_messages).to include "Email has already been taken"
     end
     it '@を含まないメールアドレスは登録できないこと' do
+      @user.email.slice!("@")
+      @user.email = @user.email
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Email is invalid"
     end
 
     # パスワードについて、空でないこと以外の制限
