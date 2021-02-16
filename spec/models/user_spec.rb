@@ -74,16 +74,39 @@ RSpec.describe User, type: :model do
 
     # パスワードについて、空でないこと以外の制限
     it 'パスワードが5文字以下では登録できないこと' do
+      @user.password = "a1a1a"
+      @user.password_confirmation = "a1a1a"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password is too short (minimum is 6 characters)"
     end
-    it 'パスワードが6文字以上であれば登録できること' do
+    it 'パスワードが6文字以上でも半角英字のみでは登録できないこと' do
+      @user.password = "aaaaaa"
+      @user.password_confirmation = "aaaaaa"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password には半角を使用し、英字と数字の両方を含めて設定してください"
     end
-    it 'パスワードが半角英字のみでは登録できないこと' do
-    end
-    it 'パスワードが半角数字のみでは登録できないこと' do
+    it 'パスワードが6文字以上でも半角数字のみでは登録できないこと' do
+      @user.password = "000000"
+      @user.password_confirmation = "000000"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password には半角を使用し、英字と数字の両方を含めて設定してください"
     end
     it 'パスワードが全角では登録できないこと' do
+      @user.password = "１ａ１ａ１ａ"
+      @user.password_confirmation = "１ａ１ａ１ａ"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password には半角を使用し、英字と数字の両方を含めて設定してください"
     end
     it 'パスワードとパスワード(確認用)が不一致では登録できないこと' do
+      @user.password = "abc123"
+      @user.password_confirmation = "a1b2c3"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+    end
+    it 'パスワードが6文字以上の半角英数混合であれば登録できること' do
+      @user.password = "abc123"
+      @user.password_confirmation = "abc123"
+      expect(@user).to be_valid
     end
     
     # ユーザー本名および本名フリガナについて、空でないこと以外の制限
