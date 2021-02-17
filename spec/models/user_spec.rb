@@ -111,12 +111,24 @@ RSpec.describe User, type: :model do
     
     # ユーザー本名および本名フリガナについて、空でないこと以外の制限
     it 'ユーザー本名の苗字が半角では登録できないこと' do
+      @user.family_name = "Jordison"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Family name ：全角文字を使用してください"
     end
     it 'ユーザー本名の名前が半角では登録できないこと' do
+      @user.first_name = "Joey"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "First name ：全角文字を使用してください"
     end
     it 'ユーザー本名の苗字フリガナが半角では登録できないこと' do
+      @user.family_name_reading = "ｼﾞｮｰﾃﾞｨｿﾝ"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Family name reading ：全角文字を使用してください"
     end
     it 'ユーザー本名の名前フリガナが半角では登録できないこと' do
+      @user.first_name_reading = "ｼﾞｮｰｲ"
+      @user.valid?
+      expect(@user.errors.full_messages).to include "First name reading ：全角文字を使用してください"
     end
 
   end
