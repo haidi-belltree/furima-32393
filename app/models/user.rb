@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :nickname, presence: true
+  validates :nickname, :birthday, presence: true
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   validates_format_of :password, with: PASSWORD_REGEX, message: 'には半角を使用し、英字と数字の両方を含めて設定してください'
@@ -18,8 +18,6 @@ class User < ApplicationRecord
     validates :family_name_reading, presence: true
     validates :first_name_reading, presence: true
   end
-
-  validates :birthday, presence: true
 
   has_many :items
   has_many :payments
