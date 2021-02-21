@@ -7,5 +7,9 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category, :condition, :postage, :prefecture, :shipment_day
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :postage
+  belongs_to :prefecture
+  belongs_to :shipment_day
 end
