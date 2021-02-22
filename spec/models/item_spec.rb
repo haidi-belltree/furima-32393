@@ -64,7 +64,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price は半角数字を使用し、300から9,999,999の間で入力してください")
       end
       it '価格が¥9,999,999より大きければ出品できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include("Price は半角数字を使用し、300から9,999,999の間で入力してください")
       end
