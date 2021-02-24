@@ -10,7 +10,9 @@ class Item < ApplicationRecord
     validates :shipment_day_id
   end
 
-  with_options presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は半角数字を使用し、300から9,999,999の間で入力してください' } do
+  with_options presence: true,
+               numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999,
+                               message: 'は半角数字を使用し、300から9,999,999の間で入力してください' } do
     validates :price
   end
 
