@@ -2,6 +2,7 @@ class PaymentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :if_current_user
+  before_action :sold_out
 
   def new
     @payment_place = PaymentPlace.new
@@ -32,6 +33,15 @@ class PaymentsController < ApplicationController
     if current_user.id == @item.user.id
       redirect_to root_path
     end
+  end
+
+  def sold_out
+    @payments = Payment.all
+    @payments.each do |payment|
+      if payment.item_id == @item.id
+        redirect_to root_path
+      end
+    end    
   end
 
 end
