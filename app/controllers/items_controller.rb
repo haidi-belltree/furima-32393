@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @payments = Payment.all
+    @payments = @item.payment
   end
 
   def edit

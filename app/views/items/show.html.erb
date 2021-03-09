@@ -8,12 +8,10 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
-      <% @payments.each do |payment| %>
-        <% if payment.item_id == @item.id %>
-        <div class="sold-out">
-          <span>Sold Out!!</span>
-        </div>
-        <% end %>
+      <% unless @payments == nil %>
+      <div class="sold-out">
+        <span>Sold Out!!</span>
+      </div>
       <% end %>
     </div>
     <div class="item-price-box">
@@ -30,10 +28,8 @@
     <p class="or-text">or</p>
     <%= link_to "削除", item_path, method: :delete, class:"item-destroy" %>
     <% elsif user_signed_in? %>
-      <% @payments.each do |payment| %>
-        <% unless payment.item_id == @item.id %><%# 商品が売れていない場合はこちらを表示しましょう %>
-          <%= link_to "購入画面に進む", new_item_payment_path(@item.id) ,class:"item-red-btn"%>
-        <% end %>
+      <% if @payments == nil %>
+        <%= link_to "購入画面に進む", new_item_payment_path(@item.id) ,class:"item-red-btn"%>
       <% end %>
     <% end %>
 
