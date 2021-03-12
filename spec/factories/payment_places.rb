@@ -6,5 +6,9 @@ FactoryBot.define do
     block         { '青山1-1-1' }
     building      { '柳ビル103' }
     phone_number  { '01234567890' }
+    user_id       { '1' }
+    item_id       { '2' }
+    item_price    { '5000' }
+    token         { 'tok__abcdefghijk00000000000000000' }
   end
 end

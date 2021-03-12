@@ -8,9 +8,10 @@ class PaymentsController < ApplicationController
     @payment_place = PaymentPlace.new
   end
 
-  def create  
+  def create
     @payment_place = PaymentPlace.new(payment_params)
     if @payment_place.valid?
+      pay_order
       @payment_place.save
       redirect_to root_path
     else
@@ -21,8 +22,8 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment_place).permit(:post_code, :prefecture_id, :city, 
-                                          :block, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id)
+    params.require(:payment_place).permit(:post_code, :prefecture_id, :city, :block, :building,
+                                          :phone_number).merge(user_id: current_user.id, item_id: @item.id, item_price: @item.price, token: params[:token])
   end
 
   def set_item
@@ -36,12 +37,19 @@ class PaymentsController < ApplicationController
   end
 
   def sold_out
-    @payments = Payment.all
-    @payments.each do |payment|
-      if payment.item_id == @item.id
-        redirect_to root_path
-      end
-    end    
+    @payments = @item.payment
+    unless @payments == nil
+      redirect_to root_path
+    end
+  end
+
+  def pay_order
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: payment_params[:item_price],
+      card: payment_params[:token],
+      currency: 'jpy'
+    )
   end
 
 end
