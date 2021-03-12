@@ -13,6 +13,9 @@ RSpec.describe PaymentPlace, type: :model do
       @payment_place.building = ''
       expect(@payment_place).to be_valid
     end
+    it 'tokenがあれば保存できる' do
+      expect(@payment_place).to be_valid
+    end
   end
 
   describe '購入情報が保存できない時' do
@@ -80,6 +83,11 @@ RSpec.describe PaymentPlace, type: :model do
       @payment_place.phone_number = '０９０１２３４５６７８'
       @payment_place.valid?
       expect(@payment_place.errors.full_messages).to include("Phone number は半角数字10〜11桁（ハイフンなし）で記入してください")
+    end
+    it 'tokenが空では保存できない' do
+      @payment_place.token = nil
+      @payment_place.valid?
+      expect(@payment_place.errors.full_messages).to include("Token can't be blank")
     end
   end
 
