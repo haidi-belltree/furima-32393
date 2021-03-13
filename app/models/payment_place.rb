@@ -10,8 +10,6 @@ class PaymentPlace
     validates :prefecture_id, numericality: { other_than: 1, message: 'を選択してください' }
     validates :token, :user_id, :item_id, :item_price, presence: true
   end
-#  validates :prefecture_id, numericality: { other_than: 1, message: 'を選択してください' }
-#  validates :token, :user_id, :item_id, :item_price, presence: true
 
   def save
     payment = Payment.create(item_id: item_id, user_id: user_id)
