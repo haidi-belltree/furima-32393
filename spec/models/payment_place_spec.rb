@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe PaymentPlace, type: :model do
   before do
-    @payment_place = FactoryBot.build(:payment_place)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @payment_place = FactoryBot.build(:payment_place, user_id: @user.id, item_id: @item.id, item_price: @item.price)
   end
 
   describe '購入情報が保存できる時' do
@@ -44,6 +46,21 @@ RSpec.describe PaymentPlace, type: :model do
       @payment_place.valid?
       expect(@payment_place.errors.full_messages).to include("Phone number can't be blank",
                                                              'Phone number は半角数字10〜11桁（ハイフンなし）で記入してください')
+    end
+    it 'user_idがなければ保存できない' do
+      @payment_place.user_id = ''
+      @payment_place.valid?
+      expect(@payment_place.errors.full_messages).to include("User can't be blank")
+    end
+    it 'item_idがなければ保存できない' do
+      @payment_place.item_id = ''
+      @payment_place.valid?
+      expect(@payment_place.errors.full_messages).to include("Item can't be blank")
+    end
+    it 'item_priceがなければ保存できない' do
+      @payment_place.item_price = ''
+      @payment_place.valid?
+      expect(@payment_place.errors.full_messages).to include("Item price can't be blank")
     end
     it '郵便番号は半角数字でなければ保存できない' do
       @payment_place.post_code = '１２３-４５６７'
