@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  validates :title, :image, presence: true
+  validates :title, :images, presence: true
   validates :description, presence: true, length: { maximum: 1000 }
 
   with_options presence: true, numericality: { other_than: 1 } do
@@ -18,7 +18,7 @@ class Item < ApplicationRecord
 
   belongs_to :user
   has_one :payment
-  has_one_attached :image
+  has_many_attached :images
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
