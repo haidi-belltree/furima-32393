@@ -93,6 +93,7 @@
   height: 200px;
   width: 200px;
   object-fit: contain;
+  display: flex;
 }
 
 /* /出品画像 */
