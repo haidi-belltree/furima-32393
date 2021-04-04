@@ -4,7 +4,7 @@ class Item < ApplicationRecord
 
   with_options presence: true,
                numericality: { other_than: 1,
-               message: 'を選択してください' } do
+                               message: 'を選択してください' } do
     validates :category_id
     validates :condition_id
     validates :postage_id
