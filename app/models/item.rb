@@ -2,7 +2,9 @@ class Item < ApplicationRecord
   validates :title, :images, presence: true
   validates :description, presence: true, length: { maximum: 1000 }
 
-  with_options presence: true, numericality: { other_than: 1 } do
+  with_options presence: true,
+               numericality: { other_than: 1,
+               message: 'を選択してください' } do
     validates :category_id
     validates :condition_id
     validates :postage_id
