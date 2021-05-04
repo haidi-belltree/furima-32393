@@ -18,12 +18,11 @@ class CardsController < ApplicationController
   private
 
   def card_params
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     @customer = Payjp::Customer.create(
       description: 'test',
       card: params[:card_token]
     )
     params.permit(:card_token).merge(customer_token: @customer.id, user_id: current_user.id)
   end
-
 end
