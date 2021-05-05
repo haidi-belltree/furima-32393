@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/show'
   get 'cards/new'
   devise_for :users
   root to: "items#index"
@@ -7,5 +8,7 @@ Rails.application.routes.draw do
     resources :payments, only: [:new, :create]
   end
 
-  resources :cards, only: [:new, :create]
+  resources :users, only: [:show, :edit, :update] do
+    resources :cards, only: [:new, :create]
+  end
 end
