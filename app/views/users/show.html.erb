@@ -1,0 +1,58 @@
+<%= render "shared/second-header"%>
+
+<div class="item-show">
+  <div class="item-box">
+    <h2 class="name">
+      <%= "#{@user.family_name}#{@user.first_name}さんのマイページ" %>
+    </h2>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <th class="detail-item">ニックネーム</th>
+          <td class="detail-value"><%= @user.nickname %></td>
+        </tr>
+        <tr>
+          <th class="detail-item">メールアドレス</th>
+          <td class="detail-value"><%= @user.email %></td>
+        </tr>
+        <tr>
+          <th class="detail-item">パスワード</th>
+          <td class="detail-value">******</td>
+        </tr>
+
+        <% unless @card == nil %>
+          <tr>
+            <th class="detail-item">クレジットカード番号</th>
+            <td class="detail-value"><%= "**** **** ****" + @card[:last4] %></td>
+          </tr>
+          <tr>
+            <th class="detail-item">カード有効期限</th>
+            <td class="detail-value">**/**</td>
+          </tr>
+        <% else %>
+          <tr>
+            <th class="detail-item">クレジットカード番号</th>
+            <td class="detail-value">未登録</td>
+          </tr>
+          <tr>
+            <th class="detail-item">カード有効期限</th>
+            <td class="detail-value">未登録</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if (user_signed_in?) && (current_user.id == @user.id) %>
+      <%= link_to "会員情報を修正する", edit_user_path(@user.id), method: :get, class: "item-red-btn" %>
+    <% end %>
+
+    <h3 class="page-heading">
+      <%= "出品商品一覧"%>
+    </h3>
+    <div class="user__item">
+      <%= render partial: "items/item", collection: @user.items %>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/second-footer"%>
