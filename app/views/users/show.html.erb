@@ -45,14 +45,19 @@
     <% if (user_signed_in?) && (current_user.id == @user.id) %>
       <%= link_to "会員情報を修正する", edit_user_path(@user.id), method: :get, class: "item-red-btn" %>
     <% end %>
+  </div>
+  <h2>
+    <%= "出品商品一覧"%>
+  </h2>
 
-    <h3 class="page-heading">
-      <%= "出品商品一覧"%>
-    </h3>
-    <div class="user__item">
-      <%= render partial: "items/item", collection: @user.items %>
+  <div class='main'>
+    <div class='item-contents'>
+      <ul class='item-lists'>
+        <%= render partial: "items/item", collection: @user.items.order('created_at DESC') %>
+      </ul>
     </div>
   </div>
 </div>
+
 
 <%= render "shared/second-footer"%>
