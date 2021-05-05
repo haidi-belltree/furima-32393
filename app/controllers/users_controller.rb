@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :unless_current_user
 
   def show
+    @item = Item.all.order('created_at DESC')
+    @payments = Payment.all
     card = @user.card
     unless card == nil
       card_info
@@ -38,7 +40,7 @@ class UsersController < ApplicationController
   def card_info
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     card = Card.find_by(user_id: @user.id)
-    customer = Payjp::Customer.retrive(card.customer_token)
+    customer = Payjp::Customer.retrieve(card.customer_token)
     @card = customer.cards.first
   end
 end
