@@ -18,6 +18,9 @@ ja:
        prefecture_id: 発送元の地域
        shipment_day_id: 発送までの日数
        price: 販売価格
+     card:
+       card_token: クレジットカード情報
+       customer_token: クレジットカード情報
  activemodel:
    attributes:
      payment_place:
