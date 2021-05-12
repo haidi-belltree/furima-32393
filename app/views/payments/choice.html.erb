@@ -1,0 +1,19 @@
+<%= render "shared/header"%>
+
+<div class="item-show">
+  <h3>
+    <%= "お支払い方法の選択" %>
+  </h3>
+  <div class="item-box">
+    <div class="choice">
+        <%= link_to "① 登録したクレジットカードで支払う", order_new_item_payments_path(@item.id) ,class:"choice-btn" %>
+        <%= link_to "② 別のクレジットカードで支払う", new_item_payment_path(@item.id) ,class:"choice-btn" %>
+    </div>
+      <div class="choice-notice">
+        <%= "※登録済みのクレジットカードでお支払いの場合は①のご利用が便利です" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/second-footer"%>
